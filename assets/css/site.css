@@ -7,9 +7,9 @@
 @font-face{font-family:"Nunito Sans";font-weight:700;font-display:swap;src:url(../fonts/nunito-sans-latin-700-normal.woff2) format("woff2")}
 
 :root{
-  --marine:#31468e; --sarcelle:#0aadba; --sarcelle-texte:#077784; --ciel:#71c7ea; --ciel-clair:#e8f6fc;
-  --soleil:#f9be29; --soleil-clair:#fdf1d3; --orange:#ef901e; --encre:#1a1a1a; --gris:#4f6268; --trait:#d8e6ec;
-  --rayon:18px; --max:1120px;
+  --marine:#1d5a63; --sarcelle:#3fb4a5; --sarcelle-texte:#17756b; --ciel:#8fcfc8; --ciel-clair:#e3f4f2;
+  --soleil:#f9be29; --soleil-clair:#fdf1d3; --orange:#f39237; --encre:#1e2b2e; --gris:#4a5f63; --trait:#cfe5e2;
+  --sol:#4b2f26; --sol-fonce:#3a241d; --rayon:18px; --max:1120px; --hf:210px;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -30,7 +30,7 @@ p,ul,ol{margin:0 0 1em}
 .saut:focus{left:8px}
 
 /* Bandeau préprod */
-.preprod{background:var(--encre);color:#fff;font-size:.88rem;text-align:center;padding:6px 12px}
+.preprod{position:relative;z-index:2;background:var(--encre);color:#fff;font-size:.88rem;text-align:center;padding:6px 12px}
 .preprod strong{color:var(--soleil)}
 
 /* En-tête */
@@ -182,5 +182,66 @@ details>div{padding:0 0 12px}
 @media (max-width:860px){.pied .cols{grid-template-columns:1fr 1fr}}
 @media (max-width:520px){.pied .cols{grid-template-columns:1fr}}
 
+
+/* ===== Univers sous-marin ===== */
+html{background:linear-gradient(180deg,#ecf8f7 0%,#d8f0ed 55%,#c6e9e5 100%) fixed;background-color:#d8f0ed}
+body{background:transparent}
+body::before,body::after{content:"";position:fixed;top:0;left:0;height:100%;z-index:-1;pointer-events:none;background-repeat:repeat;will-change:transform}
+body::before{width:calc(100% + 480px);background-image:url(../img/poissons-loin.svg);background-size:480px 320px;transform:translate3d(var(--o1,0px),0,0)}
+body::after{width:calc(100% + 640px);background-image:url(../img/poissons-pres.svg);background-size:640px 460px;background-position:0 60px;transform:translate3d(var(--o2,0px),0,0)}
+
+.entete{background:rgba(255,255,255,.9);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:3px solid var(--ciel)}
+.nav a[aria-current=page]{background:var(--ciel-clair);box-shadow:inset 0 -3px 0 var(--orange)}
+.nav .cta-nav,.btn{background:var(--orange);color:#2b1a14}
+.nav .cta-nav:hover,.btn:hover{background:#f7a85a;color:#2b1a14}
+.btn.sec{background:rgba(255,255,255,.9);border:2px solid var(--marine);color:var(--marine)}
+.btn.sec:hover{background:#fff;color:var(--marine)}
+.surtitre{background:#fff;box-shadow:0 2px 0 var(--ciel)}
+h1{color:var(--marine)}
+.page-titre h1{color:var(--sarcelle-texte)}
+
+.hero{background:transparent;border-bottom:0}
+.bloc.ciel{background:rgba(255,255,255,.5)}
+.bloc.soleil{background:rgba(253,241,211,.82)}
+.page-titre{background:transparent;border-bottom:0;padding-bottom:20px}
+.wrap.contenu{background:rgba(255,255,255,.92);border-radius:26px;padding:30px clamp(18px,4vw,44px) 44px;margin-bottom:56px;box-shadow:0 14px 40px rgba(29,90,99,.10)}
+@media (max-width:800px){.wrap.contenu{margin:0 10px 40px;border-radius:20px}}
+.carte{background:rgba(255,255,255,.92)}
+.emplacement-image{background:rgba(255,255,255,.7);border-color:#8fcfc8}
+.creneau-lettre{background:var(--sarcelle-texte)}
+.calc{border-color:var(--ciel)}
+
+/* Hameçon et asticot */
+.hamecon{position:fixed;top:0;left:calc((100vw - var(--max)) / 4 - 22px);width:44px;z-index:1;pointer-events:none}
+.hamecon .fil{display:block;width:2px;margin-left:21px;height:var(--fil,90px);background:linear-gradient(rgba(74,95,99,.25),#5d777c)}
+.hamecon svg{display:block;width:44px;height:90px;margin-top:-2px;overflow:visible}
+.hamecon .ver{transform-box:fill-box;transform-origin:50% 0;animation:ver 1.8s ease-in-out infinite alternate}
+@keyframes ver{from{transform:rotate(-7deg) scaleY(.96)}to{transform:rotate(6deg) scaleY(1.03)}}
+@media (max-width:1299px){.hamecon{display:none}}
+
+/* Fond marin du pied de page */
+.pied{background:linear-gradient(180deg,transparent 0,transparent calc(var(--hf) - 2px),var(--sol) calc(var(--hf) - 2px),var(--sol-fonce) 100%);padding:0 0 24px}
+.pied .fond-marin{display:block;width:100%;height:calc(var(--hf) + 1px);margin-bottom:-1px}
+.pied .cols{padding-top:18px}
+.pied h2{color:var(--soleil)}
+.pied a:hover{color:#ffd77a}
+.pied .bas{border-top-color:rgba(255,255,255,.2)}
+@media (max-width:760px){:root{--hf:150px}}
+.fond-marin .algue{transform-box:fill-box;transform-origin:50% 100%;animation:algue 4.5s ease-in-out infinite alternate}
+@keyframes algue{from{transform:rotate(-4deg) skewX(2deg)}to{transform:rotate(4deg) skewX(-2deg)}}
+.fond-marin .crabe{animation:crabe 7s ease-in-out infinite}
+@keyframes crabe{0%,100%{transform:translateX(0)}30%{transform:translateX(-14px)}60%{transform:translateX(12px)}}
+.fond-marin .bulle{transform-box:fill-box;opacity:0;animation:bulle 4s ease-in infinite}
+@keyframes bulle{0%{transform:translateY(0) scale(.6);opacity:0}12%{opacity:.9}100%{transform:translateY(-140px) scale(1.15);opacity:0}}
+.fond-marin .nage{animation:nage 6s ease-in-out infinite alternate}
+.fond-marin .nage.lent{animation-duration:9s}
+@keyframes nage{from{transform:translate(0,0)}to{transform:translate(-34px,-7px)}}
+
+@media (prefers-reduced-motion:reduce){
+  .fond-marin .algue,.fond-marin .crabe,.fond-marin .nage,.hamecon .ver{animation:none}
+  .fond-marin .bulle{animation:none;opacity:.8}
+  body::before,body::after{transform:none}
+}
+
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-@media print{.preprod,.entete,.pied,.apercu{display:none}}
+@media print{.preprod,.entete,.pied,.apercu,.hamecon{display:none}body::before,body::after{display:none}}

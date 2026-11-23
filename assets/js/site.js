@@ -221,4 +221,43 @@
   document.querySelectorAll("tr[data-date]").forEach(function (tr) {
     if (parseISO(tr.getAttribute("data-date")) < t) tr.classList.add("passe");
   });
+  /* ---------- Décor sous-marin : poissons en parallaxe et hameçon ---------- */
+  (function () {
+    var root = document.documentElement;
+    var reduit = window.matchMedia("(prefers-reduced-motion: reduce)");
+    var h = document.createElement("div");
+    h.className = "hamecon";
+    h.setAttribute("aria-hidden", "true");
+    h.innerHTML = '<span class="fil"></span><svg viewBox="0 0 44 90" focusable="false">' +
+      '<circle cx="22" cy="5" r="3.2" fill="none" stroke="#5d777c" stroke-width="2"/>' +
+      '<path d="M22 8V60C22 78 5 78 5 62L10 66" fill="none" stroke="#6b8489" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>' +
+      '<g class="ver"><path d="M22 16C35 19 35 29 22 31S9 42 22 46S36 55 29 66" fill="none" stroke="#e48a78" stroke-width="7" stroke-linecap="round"/>' +
+      '<path d="M25 18.5l-1.5 4M30 25l-3 1.5M20 35l3 2M17 42l4-.5M27 52l-3 2M30 59l-3.5-.5" stroke="#c96a5a" stroke-width="1.4" stroke-linecap="round"/></g></svg>';
+    document.body.appendChild(h);
+
+    var prevu = false;
+    function maj() {
+      prevu = false;
+      var y = window.pageYOffset || 0;
+      var max = Math.max(1, root.scrollHeight - window.innerHeight);
+      var p = Math.min(1, Math.max(0, y / max));
+      root.style.setProperty("--o1", (-(y * 0.12) % 480).toFixed(1) + "px");
+      root.style.setProperty("--o2", (-(y * 0.3) % 640).toFixed(1) + "px");
+      root.style.setProperty("--fil", Math.round(150 + p * window.innerHeight * 0.42) + "px");
+    }
+    function demande() { if (!prevu) { prevu = true; window.requestAnimationFrame(maj); } }
+    function brancher() {
+      window.removeEventListener("scroll", demande);
+      window.removeEventListener("resize", demande);
+      if (reduit.matches) {
+        root.style.setProperty("--o1", "0px"); root.style.setProperty("--o2", "0px"); root.style.setProperty("--fil", "35vh");
+      } else {
+        window.addEventListener("scroll", demande, { passive: true });
+        window.addEventListener("resize", demande, { passive: true });
+        maj();
+      }
+    }
+    if (reduit.addEventListener) reduit.addEventListener("change", brancher);
+    brancher();
+  })();
 })();
