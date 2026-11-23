@@ -1,0 +1,186 @@
+/* Bébés Nageurs Yonnais — préprod statique */
+@font-face{font-family:"Baloo 2";font-weight:600;font-display:swap;src:url(../fonts/baloo-2-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Baloo 2";font-weight:700;font-display:swap;src:url(../fonts/baloo-2-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:"Nunito Sans";font-weight:400;font-display:swap;src:url(../fonts/nunito-sans-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Nunito Sans";font-weight:400;font-style:italic;font-display:swap;src:url(../fonts/nunito-sans-latin-400-italic.woff2) format("woff2")}
+@font-face{font-family:"Nunito Sans";font-weight:600;font-display:swap;src:url(../fonts/nunito-sans-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Nunito Sans";font-weight:700;font-display:swap;src:url(../fonts/nunito-sans-latin-700-normal.woff2) format("woff2")}
+
+:root{
+  --marine:#31468e; --sarcelle:#0aadba; --sarcelle-texte:#077784; --ciel:#71c7ea; --ciel-clair:#e8f6fc;
+  --soleil:#f9be29; --soleil-clair:#fdf1d3; --orange:#ef901e; --encre:#1a1a1a; --gris:#4f6268; --trait:#d8e6ec;
+  --rayon:18px; --max:1120px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#fff;color:var(--encre);font:17px/1.6 "Nunito Sans",system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-text-size-adjust:100%}
+img,svg{max-width:100%;height:auto}
+a{color:var(--marine);text-underline-offset:3px}
+a:hover{color:var(--sarcelle-texte)}
+:focus-visible{outline:3px solid var(--orange);outline-offset:2px;border-radius:4px}
+h1,h2,h3{font-family:"Baloo 2",system-ui,sans-serif;color:var(--marine);line-height:1.15;margin:0 0 .5em}
+h1{font-size:clamp(2rem,5.5vw,3rem);font-weight:700}
+h2{font-size:clamp(1.5rem,3.6vw,2rem);font-weight:700;margin-top:1.6em}
+h3{font-size:1.3rem;font-weight:600;margin-top:1.3em}
+p,ul,ol{margin:0 0 1em}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+.etroit{max-width:760px}
+.sr-only{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.saut{position:absolute;left:-999px;top:8px;background:var(--soleil);color:var(--marine);padding:10px 14px;border-radius:10px;font-weight:700;z-index:100}
+.saut:focus{left:8px}
+
+/* Bandeau préprod */
+.preprod{background:var(--encre);color:#fff;font-size:.88rem;text-align:center;padding:6px 12px}
+.preprod strong{color:var(--soleil)}
+
+/* En-tête */
+.entete{background:#fff;border-bottom:1px solid var(--trait);position:sticky;top:0;z-index:50}
+.entete .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:76px}
+.marque{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--marine)}
+.marque img{width:58px;height:56px}
+.marque span{font-family:"Baloo 2",sans-serif;font-weight:700;font-size:1.15rem;line-height:1.05}
+.marque small{display:block;font-family:"Nunito Sans",sans-serif;font-weight:600;font-size:.78rem;color:var(--gris)}
+.nav ul{list-style:none;margin:0;padding:0;display:flex;gap:4px;align-items:center}
+.nav a{display:block;padding:10px 12px;border-radius:10px;text-decoration:none;font-weight:700;color:var(--marine)}
+.nav a:hover{background:var(--ciel-clair)}
+.nav a[aria-current=page]{background:var(--ciel-clair);box-shadow:inset 0 -3px 0 var(--sarcelle)}
+.nav .sous{position:relative}
+.nav .sous>ul{display:none;position:absolute;top:100%;left:0;background:#fff;border:1px solid var(--trait);border-radius:14px;padding:6px;min-width:220px;flex-direction:column;align-items:stretch;box-shadow:0 10px 30px rgba(49,70,142,.12)}
+.nav .sous:hover>ul,.nav .sous:focus-within>ul{display:flex}
+.nav .sous>a::after{content:" ▾";font-size:.8em}
+.nav .cta-nav{background:var(--soleil);color:var(--marine)}
+.nav .cta-nav:hover{background:#ffd25e}
+.burger{display:none;align-items:center;gap:8px;background:var(--ciel-clair);color:var(--marine);border:0;border-radius:12px;padding:10px 14px;font:700 1rem "Nunito Sans",sans-serif;min-height:48px;cursor:pointer}
+.burger .barres{display:inline-block;width:20px;height:2px;background:currentColor;position:relative}
+.burger .barres::before,.burger .barres::after{content:"";position:absolute;left:0;width:20px;height:2px;background:currentColor}
+.burger .barres::before{top:-6px}.burger .barres::after{top:6px}
+.burger[aria-expanded=true] .barres{background:transparent}
+.burger[aria-expanded=true] .barres::before{top:0;transform:rotate(45deg)}
+.burger[aria-expanded=true] .barres::after{top:0;transform:rotate(-45deg)}
+
+@media (max-width:760px){
+  .burger{display:inline-flex}
+  .nav{display:none;position:absolute;left:0;right:0;top:100%;background:#fff;border-bottom:1px solid var(--trait);box-shadow:0 16px 30px rgba(49,70,142,.12);max-height:calc(100vh - 76px);overflow:auto}
+  .nav.ouvert{display:block}
+  .nav ul{flex-direction:column;align-items:stretch;padding:8px 16px 16px;gap:2px}
+  .nav a{padding:14px 12px;font-size:1.05rem}
+  .nav .sous>ul{display:flex;position:static;border:0;box-shadow:none;padding:0 0 0 14px;min-width:0}
+  .nav .sous>a::after{content:""}
+  .nav .cta-nav{text-align:center;margin-top:8px}
+  .marque img{width:48px;height:46px}
+  .marque small{display:none}
+}
+
+/* Bandeau d'accueil */
+.hero{background:linear-gradient(180deg,var(--ciel-clair),#fff);padding:40px 0 48px;border-bottom:1px solid var(--trait)}
+.hero .wrap{display:grid;grid-template-columns:1.15fr 1fr;gap:32px;align-items:start}
+.hero p.chapo{font-size:1.15rem;color:var(--gris)}
+@media (max-width:860px){.hero .wrap{grid-template-columns:1fr}}
+.apercu{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:.85rem;color:var(--gris);margin:0 0 18px}
+.apercu button{font:600 .85rem "Nunito Sans",sans-serif;border:1px dashed var(--gris);background:#fff;color:var(--gris);border-radius:999px;padding:4px 12px;cursor:pointer;min-height:32px}
+.apercu button[aria-pressed=true]{border-style:solid;border-color:var(--marine);color:var(--marine);background:var(--ciel-clair)}
+.surtitre{display:inline-block;background:var(--soleil-clair);color:var(--marine);font-weight:700;border-radius:999px;padding:4px 12px;font-size:.9rem;margin-bottom:10px}
+
+/* Boutons */
+.btn{display:inline-block;background:var(--soleil);color:var(--marine);font-weight:700;text-decoration:none;border-radius:14px;padding:14px 22px;border:0;font-size:1.02rem;min-height:48px;cursor:pointer}
+.btn:hover{background:#ffd25e;color:var(--marine)}
+.btn.sec{background:#fff;border:2px solid var(--marine)}
+.btn.sec:hover{background:var(--ciel-clair)}
+.actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:18px}
+.lien-fleche{font-weight:700;text-decoration:none}
+.lien-fleche::after{content:" →"}
+
+/* Sections, cartes */
+main section{padding:8px 0}
+.bloc{padding:44px 0}
+.bloc.ciel{background:var(--ciel-clair)}
+.bloc.soleil{background:var(--soleil-clair)}
+.grille{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.carte{background:#fff;border:1px solid var(--trait);border-radius:var(--rayon);padding:22px}
+.carte h3{margin-top:0}
+.carte.ombre{box-shadow:0 8px 24px rgba(49,70,142,.08);border:0}
+.creneau-lettre{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--marine);color:#fff;font:700 1.3rem "Baloo 2",sans-serif;margin-bottom:8px}
+.page-titre{background:var(--ciel-clair);padding:36px 0 28px;border-bottom:1px solid var(--trait)}
+.page-titre p{color:var(--gris);font-size:1.1rem;max-width:720px;margin:0}
+.contenu{padding-top:24px;padding-bottom:56px}
+.note{background:var(--soleil-clair);border-left:5px solid var(--soleil);border-radius:10px;padding:12px 16px;font-size:.95rem}
+.note.travail{background:#fff4e6;border-left-color:var(--orange)}
+.etapes{counter-reset:e;list-style:none;padding:0}
+.etapes li{counter-increment:e;position:relative;padding:0 0 14px 52px}
+.etapes li::before{content:counter(e);position:absolute;left:0;top:-2px;width:36px;height:36px;border-radius:50%;background:var(--sarcelle-texte);color:#fff;display:grid;place-items:center;font:700 1.05rem "Baloo 2",sans-serif}
+blockquote{margin:1.2em 0;padding:16px 20px;background:var(--ciel-clair);border-radius:var(--rayon);font-style:italic;color:var(--marine)}
+
+/* Tableaux */
+.table-wrap{overflow-x:auto;margin:0 0 1.2em}
+table{border-collapse:collapse;width:100%;min-width:420px;font-size:.98rem}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--trait);vertical-align:top}
+th{background:var(--ciel-clair);color:var(--marine);font-weight:700}
+tr.passe td{color:var(--gris)}
+tr.special td:first-child{font-weight:700}
+.tag{display:inline-block;font-size:.8rem;font-weight:700;border-radius:999px;padding:1px 9px;margin-left:4px}
+.tag.parcours{background:var(--ciel-clair);color:var(--sarcelle-texte)}
+.tag.photo{background:var(--soleil-clair);color:#7a5600}
+.tag.off{background:#eef1f2;color:var(--gris)}
+.tag.ag{background:#e7eaf6;color:var(--marine)}
+.tag.ratt{background:#fff0e0;color:#8a4b00}
+
+/* Emplacements d'image */
+.emplacement-image{border:2px dashed #9fc7d6;background:#f3f9fb;border-radius:var(--rayon);min-height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:20px;text-align:center;color:var(--sarcelle-texte);font-size:.92rem}
+.emplacement-image svg{width:40px;height:40px}
+.emplacement-image.petit{min-height:150px}
+
+/* FAQ */
+details{border:1px solid var(--trait);border-radius:14px;padding:0 18px;margin:0 0 10px;background:#fff}
+details[open]{box-shadow:0 6px 18px rgba(49,70,142,.07)}
+summary{cursor:pointer;font-weight:700;color:var(--marine);padding:14px 0;list-style:none;position:relative;padding-right:28px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";position:absolute;right:0;top:10px;font:700 1.4rem "Baloo 2",sans-serif;color:var(--sarcelle-texte)}
+details[open] summary::after{content:"–"}
+details>div{padding:0 0 12px}
+
+/* Chansons */
+.chanson{break-inside:avoid}
+.chanson p{white-space:pre-line}
+.chanson .air{color:var(--gris);font-style:italic}
+
+/* Calculateur */
+.calc{background:#fff;border-radius:var(--rayon);padding:22px;box-shadow:0 10px 30px rgba(49,70,142,.12);border:1px solid var(--trait)}
+.calc h2,.calc h3{margin-top:0}
+.calc label{display:block;font-weight:700;margin:0 0 6px}
+.calc select,.calc input{font:inherit;width:100%;padding:12px;border:1px solid #b9ccd4;border-radius:12px;background:#fff;color:var(--encre);min-height:48px}
+.calc .ligne{display:flex;gap:8px;align-items:center;margin-bottom:10px}
+.calc .ligne input{flex:1}
+.calc .suppr{background:transparent;border:0;color:var(--gris);font-size:1.4rem;min-width:44px;min-height:44px;cursor:pointer;border-radius:10px}
+.calc .ajout{background:transparent;color:var(--sarcelle-texte);border:2px dashed var(--sarcelle-texte);border-radius:12px;padding:8px 14px;font:700 .95rem "Nunito Sans",sans-serif;min-height:44px;cursor:pointer}
+.calc .aide{font-size:.88rem;color:var(--gris);margin:8px 0 0}
+.calc .resultat{margin-top:16px;border-top:1px solid var(--trait);padding-top:14px}
+.calc .resultat .vide{color:var(--gris);margin:0}
+.calc .enfant{padding:8px 0;border-bottom:1px dashed var(--trait)}
+.calc .enfant:last-child{border-bottom:0}
+.calc .badge{display:inline-block;font-weight:700;border-radius:999px;padding:2px 10px;font-size:.85rem}
+.calc .badge.complet{background:#fde8e1;color:#a0331a}
+.calc .badge.bientot{background:var(--soleil-clair);color:#7a5600}
+.calc .badge.ok{background:#e3f5ec;color:#1d6b43}
+.calc .badge.hors{background:#eef1f2;color:var(--gris)}
+.calc .total{font:700 1.25rem "Baloo 2",sans-serif;color:var(--marine);margin:10px 0 0}
+
+/* Formulaire maquette */
+.form-maquette{background:var(--ciel-clair);border-radius:var(--rayon);padding:20px}
+.form-maquette .note{margin-top:12px}
+
+/* Pied de page */
+.pied{background:var(--marine);color:#fff;padding:44px 0 24px;margin-top:0}
+.pied a{color:#fff}
+.pied a:hover{color:var(--soleil)}
+.pied .cols{display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
+.pied h2{color:var(--soleil);font-size:1.15rem;margin:0 0 10px}
+.pied ul{list-style:none;padding:0;margin:0}
+.pied li{margin:0 0 6px}
+.pied .logo-cartouche{background:#fff;border-radius:16px;padding:10px;display:inline-block}
+.pied .logo-cartouche img{width:96px;height:93px;display:block}
+.pied .bas{border-top:1px solid rgba(255,255,255,.25);margin-top:28px;padding-top:16px;font-size:.88rem;opacity:.9}
+@media (max-width:860px){.pied .cols{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.pied .cols{grid-template-columns:1fr}}
+
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{.preprod,.entete,.pied,.apercu{display:none}}
