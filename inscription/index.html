@@ -20,7 +20,12 @@
     <button class="burger" type="button" aria-expanded="false" aria-controls="menu"><span class="barres" aria-hidden="true"></span><span class="libelle">Menu</span></button>
     <nav class="nav" id="menu" aria-label="Menu principal">
       <ul>
-        <li><a href="../eveil-aquatique/index.html">L'activité</a></li>
+        <li class="sous"><a href="../eveil-aquatique/index.html">L'activité</a>
+          <ul>
+            <li><a href="../eveil-aquatique/index.html">L'éveil aquatique</a></li>
+            <li><a href="../notre-pedagogie/index.html">Notre pédagogie</a></li>
+          </ul>
+        </li>
         <li class="sous"><a href="../planning/index.html">La saison</a>
           <ul>
             <li><a href="../planning/index.html">Planning de la saison</a></li>
@@ -73,15 +78,35 @@
   <p>Elle comprend la location des bassins, la formation des animateurs, le matériel, l'adhésion à la FAAEL et la licence-assurance familiale, qui couvre deux accompagnateurs par enfant. Le badge d'accès est remis en début de saison contre une caution de 5 €. La cotisation n'est pas remboursable ; le bureau peut étudier une situation particulière.</p>
 
   <h2>Le calendrier des inscriptions</h2>
-  <ol class="etapes">
+  <ul>
     <li><strong>Avril-mai</strong> : une séance d'essai, à une date annoncée ici. 5 €, déduits de la cotisation si vous vous inscrivez.</li>
     <li><strong>Avril</strong> : les familles déjà adhérentes se réinscrivent en priorité, par un lien reçu par email.</li>
     <li><strong>Ensuite</strong> : ouverture à toutes les familles, sur cette page, dans la limite des places de chaque créneau.</li>
     <li><strong>Septembre</strong> : réunion de rentrée et assemblée générale, puis première séance.</li>
-  </ol>
-  <p>L'inscription et le paiement se font en ligne sur HelloAsso, avec le formulaire du créneau de votre enfant.</p>
+  </ul>
 
-  <h2>Créneau complet ?</h2>
+  <h2 id="etapes">S'inscrire en 5 étapes</h2>
+  <ol class="etapes">
+    <li><strong>Trouver le créneau de votre enfant</strong> avec le calculateur en haut de cette page : il dépend de son âge au 1er septembre. Pour une fratrie, c'est le créneau du plus âgé.</li>
+    <li><strong>Préparer les documents</strong> listés ci-dessous, en particulier le certificat médical.</li>
+    <li><strong>Remplir le formulaire HelloAsso</strong> du créneau et payer la cotisation en une fois, par carte bancaire. Le lien apparaît sur cette page à l'ouverture des inscriptions (en avril, d'abord pour les familles déjà adhérentes).</li>
+    <li><strong>Recevoir la confirmation</strong> : HelloAsso vous envoie un email avec votre reçu, qui sert aussi d'attestation de paiement.</li>
+    <li><strong>Récupérer votre badge</strong> en début de saison, contre un chèque de caution de 5 €. Quand le dossier est complet, rendez-vous au bassin pour la première séance.</li>
+  </ol>
+  <p>Si le créneau est déjà complet, passez directement par la <a href="#liste-attente">liste d'attente</a>.</p>
+
+  <div class="encadre-docs" id="documents">
+    <h2>Documents à préparer</h2>
+    <ul>
+      <li><strong>Certificat médical de non contre-indication</strong> pour votre enfant : obligatoire.</li>
+      <li><strong>Chèque de caution de 5 €</strong> pour le badge d'accès, rendu en fin de saison avec le badge.</li>
+      <li><strong>Formulaire HelloAsso</strong> rempli et payé. L'autorisation de publier des photos de votre enfant y est proposée : elle est facultative et vous pouvez la retirer à tout moment.</li>
+    </ul>
+    <p><strong>Important :</strong> l'accès au bassin n'est possible qu'avec un dossier complet.</p>
+    <p class="note travail">Les modalités de remise du certificat médical (à quel moment, à qui) seront précisées après décision du CA.</p>
+  </div>
+
+  <h2 id="liste-attente">Créneau complet ?</h2>
   <p>Inscrivez-vous sur la liste d'attente avec la date de naissance de votre enfant : nous vous recontactons dès qu'une place se libère.</p>
   <div class="form-maquette"><p><strong>Champs prévus :</strong> prénom, email, date de naissance de l'enfant. Les données sont effacées en fin de saison.</p><a class="btn" href="mailto:bbnageursyonnais@gmail.com?subject=Liste%20d%27attente&amp;body=Bonjour%2C%0A%0AJe%20souhaite%20m%27inscrire%20sur%20la%20liste%20d%27attente.%0APr%C3%A9nom%20%3A%20%0ADate%20de%20naissance%20de%20l%27enfant%20%3A%20%0A%0AMerci%20%21">Écrire au club</a><p class="note travail">Formulaire en ligne à brancher. En attendant, ce bouton ouvre un email avec l'objet prérempli.</p></div>
 </div>
