@@ -1,4 +1,5 @@
-/* Bébés Nageurs Yonnais — préprod statique. Aucun appel extérieur, rien n'est enregistré. */
+/* Bébés Nageurs Yonnais — préprod statique. Rien n'est enregistré. Seul appel extérieur : la phase des
+   inscriptions lue sur l'Espace BNY (aucune donnée personnelle, voir PHASE_URL). */
 (function () {
   "use strict";
 
@@ -9,6 +10,7 @@
     email: "bbnageursyonnais@gmail.com",
     helloasso: "https://www.helloasso.com/associations/club-des-bebes-nageurs-yonnais/adhesions/adhesion-{s}-creneau-{c}"
   };
+  var PHASE_URL = "https://espace-bny.netlify.app/api/phase";
   var SLUGS = { A: "a-4-mois-18-mois", B: "b-18-mois-3ans", C: "c-3-ans-6ans" };
   var CRENEAUX = {
     A: { ages: "4 à 18 mois", heure: "8h00 – 8h30", acces: "7h45" },
@@ -214,6 +216,49 @@
       });
     });
     appliquer(mode);
+
+    /* Phase des inscriptions réglée par le bureau dans l'Espace BNY.
+       Si l'app ne répond pas (ou en aperçu ?apercu=…), le bandeau garde son comportement par dates. */
+    function appliquerPhase(etat) {
+      var phase = etat.complet ? "complet" : etat.phase;
+      var note = document.getElementById("bandeau-phase");
+      if (!note) {
+        note = document.createElement("p");
+        note.id = "bandeau-phase";
+        note.className = "bandeau-phase";
+        note.setAttribute("role", "status");
+        hero.querySelector(".wrap > div").insertBefore(note, hero.querySelector(".apercu").nextSibling);
+      }
+      note.hidden = false;
+      if (phase === "prioritaires") {
+        CONFIG.saisonSuivante.ouverte = true;
+        appliquer("inscriptions");
+        note.textContent = "Inscriptions ouvertes aux familles déjà adhérentes.";
+      } else if (phase === "ouvertes") {
+        CONFIG.saisonSuivante.ouverte = true;
+        appliquer("inscriptions");
+        note.innerHTML = 'Inscriptions ouvertes. <a href="inscription/index.html">Voir mon créneau et m\u2019inscrire</a>';
+      } else if (phase === "complet") {
+        CONFIG.saisonSuivante.ouverte = false;
+        appliquer("saison");
+        note.innerHTML = 'Saison complète : liste d\u2019attente par email. <a href="' + mailto("Liste d'attente", "Bonjour,\n\nJe souhaite m'inscrire sur la liste d'attente.\nDate de naissance de mon enfant : \n") + '">Écrire au club</a>';
+      } else {
+        CONFIG.saisonSuivante.ouverte = false;
+        appliquer("saison");
+        note.hidden = true;
+      }
+    }
+    if (!q && window.fetch) {
+      var ctrl = window.AbortController ? new AbortController() : null;
+      var minuteur = setTimeout(function () { if (ctrl) ctrl.abort(); }, 4000);
+      fetch(PHASE_URL, { credentials: "omit", signal: ctrl ? ctrl.signal : undefined })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (etat) {
+          clearTimeout(minuteur);
+          if (etat && typeof etat.phase === "string") appliquerPhase(etat);
+        })
+        .catch(function () { /* app indisponible : comportement par dates */ });
+    }
   }
 
   /* ---------- Planning : marquer les dates passées ---------- */
