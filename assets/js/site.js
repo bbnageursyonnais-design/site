@@ -220,7 +220,8 @@
     /* Phase des inscriptions réglée par le bureau dans l'Espace BNY.
        Si l'app ne répond pas (ou en aperçu ?apercu=…), le bandeau garde son comportement par dates. */
     function appliquerPhase(etat) {
-      var phase = etat.complet ? "complet" : etat.phase;
+      // « Prioritaires » est respecté tel quel ; sinon, créneaux tous pleins = saison complète.
+      var phase = etat.phase === "prioritaires" ? "prioritaires" : (etat.complet ? "complet" : etat.phase);
       var note = document.getElementById("bandeau-phase");
       if (!note) {
         note = document.createElement("p");
