@@ -1,5 +1,6 @@
-/* Bébés Nageurs Yonnais — préprod statique. Rien n'est enregistré. Seul appel extérieur : la phase des
-   inscriptions lue sur l'Espace BNY (aucune donnée personnelle, voir PHASE_URL). */
+/* Bébés Nageurs Yonnais — préprod statique. Rien n'est enregistré. Appels extérieurs : la phase des
+   inscriptions lue sur l'Espace BNY (aucune donnée personnelle, voir PHASE_URL) et l'envoi du formulaire de
+   contact (CONTACT_URL), transmis au club par email, sans stockage. */
 (function () {
   "use strict";
 
@@ -305,5 +306,68 @@
     }
     if (reduit.addEventListener) reduit.addEventListener("change", brancher);
     brancher();
+  })();
+
+  /* ---------- Formulaire de contact (envoi par l'Espace BNY, sans stockage) ---------- */
+  (function () {
+    var CONTACT_URL = "https://espace-bny.netlify.app/api/contact";
+    var form = document.getElementById("contact-form");
+    if (!form || !window.fetch) return;
+    var secours = document.getElementById("contact-secours");
+    var statut = document.getElementById("contact-statut");
+    var bouton = form.querySelector("button[type=submit]");
+    var jeton = null;
+    var SECOURS = "Écrivez-nous à " + CONFIG.email + ".";
+
+    function montrerSecours() { form.hidden = true; if (secours) secours.hidden = false; }
+    function dire(texte, ok) { statut.textContent = texte; statut.className = "contact-statut " + (ok ? "ok" : "ko"); }
+
+    fetch(CONTACT_URL, { method: "GET", mode: "cors" })
+      .then(function (r) { if (!r.ok) throw new Error("indisponible"); return r.json(); })
+      .then(function (d) { if (!d || !d.jeton) throw new Error("indisponible"); jeton = d.jeton; form.hidden = false; if (secours) secours.hidden = true; })
+      .catch(montrerSecours);
+
+    var regles = {
+      email: function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); },
+      sujet: function (v) { return v !== ""; },
+      message: function (v) { return v.trim().length >= 10 && v.length <= 3000; }
+    };
+    function verifier(nom) {
+      var champ = form.elements[nom];
+      var ok = regles[nom](champ.value);
+      champ.setAttribute("aria-invalid", ok ? "false" : "true");
+      document.getElementById("cf-" + nom + "-err").hidden = ok;
+      return ok;
+    }
+    // Revalidation pendant la saisie (et non à la sortie du champ) : un message d'erreur qui disparaît au moment
+    // du clic décalerait le bouton « Envoyer » sous le doigt.
+    ["email", "sujet", "message"].forEach(function (nom) {
+      var champ = form.elements[nom];
+      function revoir() { if (champ.getAttribute("aria-invalid") === "true") verifier(nom); }
+      champ.addEventListener("input", revoir);
+      champ.addEventListener("change", revoir);
+    });
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var erreurs = ["email", "sujet", "message"].filter(function (n) { return !verifier(n); });
+      if (erreurs.length) { form.elements[erreurs[0]].focus(); dire("Merci de corriger les champs signalés.", false); return; }
+      bouton.disabled = true;
+      dire("Envoi en cours…", true);
+      fetch(CONTACT_URL, {
+        method: "POST", mode: "cors", headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          nom: form.elements.nom.value, email: form.elements.email.value, sujet: form.elements.sujet.value,
+          message: form.elements.message.value, site_web: form.elements.site_web.value, jeton: jeton
+        })
+      })
+        .then(function (r) { if (!r.ok) throw new Error("envoi"); return r.json(); })
+        .then(function () {
+          form.reset();
+          dire("Merci, votre message est bien parti. Vous allez recevoir un accusé de réception par email.", true);
+        })
+        .catch(function () { dire("Le message n'a pas pu partir. " + SECOURS, false); })
+        .then(function () { bouton.disabled = false; });
+    });
   })();
 })();

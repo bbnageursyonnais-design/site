@@ -64,7 +64,47 @@
   </div>
   <p style="margin-top:18px">Le club n'a pas de numéro de téléphone. Avant d'écrire, jetez un œil aux <a href="../questions-frequentes/index.html">questions fréquentes</a> : la réponse y est peut-être.</p>
   <h2>Nous écrire</h2>
-  <div class="form-maquette"><p><strong>Champs prévus :</strong> nom, email, message.</p><a class="btn" href="mailto:bbnageursyonnais@gmail.com?subject=Question%20au%20club&amp;body=Bonjour%2C%0A%0A">Écrire au club</a><p class="note travail">Formulaire en ligne à brancher. En attendant, ce bouton ouvre un email avec l'objet prérempli.</p></div>
+  <div class="contact-secours" id="contact-secours">
+    <p>Écrivez-nous à <a href="mailto:bbnageursyonnais@gmail.com">bbnageursyonnais@gmail.com</a>.</p>
+  </div>
+  <form class="contact-form" id="contact-form" novalidate hidden>
+    <p class="note">Les champs marqués * sont obligatoires.</p>
+    <div class="champ">
+      <label for="cf-nom">Votre nom</label>
+      <input id="cf-nom" name="nom" type="text" autocomplete="name" maxlength="100">
+    </div>
+    <div class="champ">
+      <label for="cf-email">Votre email *</label>
+      <input id="cf-email" name="email" type="email" autocomplete="email" required aria-describedby="cf-email-err">
+      <p class="champ-erreur" id="cf-email-err" hidden>Indiquez une adresse email valide.</p>
+    </div>
+    <div class="champ">
+      <label for="cf-sujet">Sujet *</label>
+      <select id="cf-sujet" name="sujet" required aria-describedby="cf-sujet-err">
+        <option value="">Choisir…</option>
+        <option value="inscription">Inscription</option>
+        <option value="liste-attente">Liste d'attente</option>
+        <option value="essai">Séance d'essai</option>
+        <option value="age-creneau">Âge et créneau</option>
+        <option value="attestation">Attestation</option>
+        <option value="benevolat">Bénévolat</option>
+        <option value="autre">Autre</option>
+      </select>
+      <p class="champ-erreur" id="cf-sujet-err" hidden>Choisissez un sujet.</p>
+    </div>
+    <div class="champ">
+      <label for="cf-message">Votre message *</label>
+      <textarea id="cf-message" name="message" rows="6" minlength="10" maxlength="3000" required aria-describedby="cf-message-err"></textarea>
+      <p class="champ-erreur" id="cf-message-err" hidden>Votre message doit faire entre 10 et 3000 caractères.</p>
+    </div>
+    <div class="champ-piege" aria-hidden="true">
+      <label for="cf-site">Ne pas remplir ce champ</label>
+      <input id="cf-site" name="site_web" type="text" tabindex="-1" autocomplete="off">
+    </div>
+    <button class="btn" type="submit">Envoyer</button>
+    <p class="contact-statut" id="contact-statut" role="status" aria-live="polite"></p>
+    <p class="note">Votre message est transmis au club par email et n'est pas conservé sur ce site. Vous recevez un accusé de réception. <a href="../confidentialite/index.html">Données personnelles</a></p>
+  </form>
 </div>
 </main>
 <footer class="pied">

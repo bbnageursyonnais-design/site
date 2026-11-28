@@ -258,3 +258,19 @@ h1{color:var(--marine)}
 /* Bandeau de phase des inscriptions (piloté par l'Espace BNY) */
 .bandeau-phase { display: inline-block; margin: 0 0 12px; padding: 8px 14px; border-radius: 999px; background: #fff4e6; border: 2px solid #f39237; color: #1d5a63; font-weight: 700; }
 .bandeau-phase a { color: #9a4a06; }
+
+/* Formulaire de contact */
+.contact-form{background:var(--ciel-clair);border-radius:var(--rayon);padding:20px;display:grid;gap:14px}
+.contact-form .champ{display:grid;gap:6px}
+.contact-form label{font-weight:700}
+.contact-form input,.contact-form select,.contact-form textarea{font:inherit;width:100%;padding:12px;border:1px solid #b9ccd4;border-radius:12px;background:#fff;color:var(--encre);min-height:48px;box-sizing:border-box}
+.contact-form textarea{min-height:140px;resize:vertical}
+.contact-form [aria-invalid="true"]{border-color:#b3261e;outline:2px solid #b3261e}
+.contact-form .champ-erreur{color:#b3261e;margin:0;font-size:.95rem}
+.contact-form .champ-piege{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}
+.contact-form button[disabled]{opacity:.6;cursor:wait}
+.contact-statut{margin:0;font-weight:700}
+.contact-statut.ok{color:#1d5a63}
+.contact-statut.ko{color:#b3261e}
+.contact-secours{background:var(--ciel-clair);border-radius:var(--rayon);padding:20px}
+.contact-form[hidden],.contact-secours[hidden]{display:none!important}
